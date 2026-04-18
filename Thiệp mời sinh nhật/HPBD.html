@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thiệp mời sinh nhật Gia Phát</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    :root {
+      --pink: #ff7eb3;
+      --rose: #ff4f81;
+      --gold: #ffbf69;
+      --cream: #fff8f2;
+      --text: #5a2a3a;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, #ffe3ef 0%, transparent 30%),
+        radial-gradient(circle at bottom right, #ffe7c2 0%, transparent 28%),
+        linear-gradient(135deg, #fff3f8, #fff0df);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 760px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(8px);
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.12);
+      border: 1px solid rgba(255,255,255,0.65);
+      position: relative;
+    }
+
+    .hero {
+      position: relative;
+      padding: 60px 32px 40px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--pink), var(--gold));
+      color: white;
+      overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.16);
+    }
+
+    .hero::before {
+      width: 180px;
+      height: 180px;
+      top: -60px;
+      left: -30px;
+    }
+
+    .hero::after {
+      width: 220px;
+      height: 220px;
+      right: -70px;
+      bottom: -100px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-size: 13px;
+      margin-bottom: 12px;
+      opacity: 0.95;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 44px;
+      line-height: 1.18;
+    }
+
+    .subtitle {
+      margin-top: 12px;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .content {
+      padding: 34px 32px 28px;
+    }
+
+    .greeting {
+      font-size: 24px;
+      text-align: center;
+      margin: 0 0 18px;
+    }
+
+    .guest-name {
+      color: var(--rose);
+      font-weight: 700;
+    }
+
+    .message {
+      text-align: center;
+      font-size: 17px;
+      line-height: 1.8;
+      margin: 0 auto 28px;
+      max-width: 590px;
+    }
+
+    .host-highlight {
+      text-align: center;
+      background: linear-gradient(135deg, #fff4f8, #fff7eb);
+      border: 1px solid #ffd6e5;
+      color: #8b435b;
+      border-radius: 20px;
+      padding: 18px;
+      margin-bottom: 22px;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .host-highlight strong {
+      color: var(--rose);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 26px;
+    }
+
+    .info-box {
+      background: #fffafc;
+      border: 1px solid #ffd7e3;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 8px 20px rgba(255, 126, 179, 0.08);
+    }
+
+    .label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #b7687c;
+      margin-bottom: 8px;
+    }
+
+    .value {
+      font-size: 19px;
+      font-weight: 700;
+      color: #583542;
+      line-height: 1.4;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 22px;
+      background: linear-gradient(135deg, var(--pink), var(--gold));
+      color: white;
+      text-decoration: none;
+      border-radius: 999px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(255, 126, 179, 0.25);
+      font-size: 15px;
+    }
+
+    .btn.secondary {
+      background: white;
+      color: var(--rose);
+      border: 1px solid #ffc7d8;
+      box-shadow: none;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 0 32px 32px;
+      color: #7a5660;
+    }
+
+    .note {
+      margin-top: 16px;
+      font-size: 14px;
+      color: #92646f;
+      line-height: 1.6;
+    }
+
+    .balloon {
+      position: fixed;
+      bottom: -120px;
+      width: 52px;
+      height: 68px;
+      border-radius: 50% 50% 48% 48%;
+      opacity: 0.55;
+      animation: floatUp linear infinite;
+      z-index: 0;
+    }
+
+    .balloon::after {
+      content: "";
+      position: absolute;
+      width: 2px;
+      height: 70px;
+      background: rgba(120,120,120,0.4);
+      left: 50%;
+      top: 66px;
+      transform: translateX(-50%);
+    }
+
+    .b1 { left: 8%; background: #ff8fab; animation-duration: 16s; }
+    .b2 { left: 22%; background: #ffd166; animation-duration: 19s; width: 46px; height: 62px; }
+    .b3 { left: 78%; background: #9bf6ff; animation-duration: 17s; }
+    .b4 { left: 90%; background: #caffbf; animation-duration: 21s; width: 44px; height: 60px; }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) translateX(0); }
+      100% { transform: translateY(-120vh) translateX(20px); }
+    }
+
+    #confetti-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    @media (max-width: 640px) {
+      h1 { font-size: 34px; }
+      .content, .footer { padding-left: 20px; padding-right: 20px; }
+      .info-grid { grid-template-columns: 1fr; }
+      .greeting { font-size: 21px; }
+      .message, .host-highlight { font-size: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confetti-canvas"></canvas>
+
+  <div class="balloon b1"></div>
+  <div class="balloon b2"></div>
+  <div class="balloon b3"></div>
+  <div class="balloon b4"></div>
+
+  <div class="wrapper">
+    <div class="card">
+      <section class="hero">
+        <div class="hero-content">
+          <div class="eyebrow">Birthday Invitation</div>
+          <h1>Thiệp mời sinh nhật Gia Phát</h1>
+          <div class="subtitle">Cùng đến chung vui trong ngày đặc biệt 21/04 🎂</div>
+          <div id="countdown" style="margin-top:16px;font-size:16px;font-weight:700;background:rgba(255,255,255,0.18);display:inline-block;padding:10px 18px;border-radius:999px;">Đang tính thời gian...</div>
+        </div>
+      </section>
+
+      <section class="content">
+        <div style="display:flex;justify-content:center;margin-bottom:24px;">
+          <img id="hostPhoto" src="gia-phat.jpg" alt="Gia Phát" style="width:180px;height:180px;object-fit:cover;border-radius:50%;border:6px solid #fff;box-shadow:0 12px 30px rgba(255,126,179,0.22);" />
+        </div>
+
+        <p class="greeting">Thân mời <span class="guest-name" id="guestName">bạn</span></p>
+
+        <p class="message">
+          Tui rất vui nếu ní có thể dành thời gian đến tham dự buổi tiệc sinh nhật của tui.
+          Sự hiện diện của ní sẽ làm cho ngày hôm đó trở nên ấm áp, vui vẻ và đáng nhớ hơn rất nhiều.
+        </p>
+
+        <div class="host-highlight">
+          Chủ tiệc là <strong>Gia Phát</strong>.<br />
+          Hẹn gặp bạn trong ngày sinh nhật <strong>21/04</strong> để cùng thổi nến, chụp ảnh và lưu lại những khoảnh khắc thật đẹp.
+        </div>
+
+        <div class="info-grid">
+          <div class="info-box">
+            <div class="label">Chủ tiệc</div>
+            <div class="value">Gia Phát</div>
+          </div>
+          <div class="info-box">
+            <div class="label">Ngày sinh nhật</div>
+            <div class="value">21/04</div>
+          </div>
+          <div class="info-box">
+            <div class="label">Thời gian</div>
+            <div class="value">19:00</div>
+          </div>
+          <div class="info-box">
+            <div class="label">Địa điểm</div>
+            <div class="value">Quán Ốc Lẩu Cây Bàng, 440 Dương Quảng Hàm, An Nhơn, Hồ Chí Minh, Việt Nam</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="footer">
+        <div>Mong được gặp bạn tại bữa tiệc 🎉</div>
+        <div class="actions">
+          <a class="btn secondary" href="https://www.google.com/maps/dir//Qu%C3%A1n+%E1%BB%90c+L%E1%BA%A9u+C%C3%A2y+B%C3%A0ng,+440+D%C6%B0%C6%A1ng+Qu%E1%BA%A3ng+H%C3%A0m,+An+Nh%C6%A1n,+H%E1%BB%93+Ch%C3%AD+Minh,+Vi%E1%BB%87t+Nam/@10.8429868,106.7118048,4270m/data=!3m1!1e3!4m8!4m7!1m0!1m5!1m1!1s0x317528562ffca04f:0x9080ac593a779b2!2m2!1d106.6846598!2d10.8343959?entry=ttu&g_ep=EgoyMDI2MDQxNS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">Xem bản đồ</a>
+        </div>
+        
+      </section>
+    </div>
+  </div>
+
+  <audio id="bgMusic" loop autoplay playsinline>
+    <source src="happy-birthday.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const ten = params.get('Ten');
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/\"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    if (ten) {
+      document.getElementById('guestName').innerHTML = escapeHtml(decodeURIComponent(ten));
+    }
+
+    const music = document.getElementById('bgMusic');
+
+    async function tryAutoPlayMusic() {
+      try {
+        music.muted = false;
+        await music.play();
+      } catch (error) {
+        console.log('Trình duyệt có thể chặn tự phát nhạc nếu chưa có tương tác từ người dùng.');
+      }
+    }
+
+    window.addEventListener('load', tryAutoPlayMusic);
+    document.addEventListener('click', tryAutoPlayMusic, { once: true });
+
+    function getNextBirthday() {
+      const now = new Date();
+      const currentYear = now.getFullYear();
+      let birthday = new Date(currentYear, 3, 21, 0, 0, 0);
+
+      if (birthday < now) {
+        birthday = new Date(currentYear + 1, 3, 21, 0, 0, 0);
+      }
+
+      return birthday;
+    }
+
+    function updateCountdown() {
+      const now = new Date();
+      const target = getNextBirthday();
+      const diff = target - now;
+      const countdownEl = document.getElementById('countdown');
+
+      if (diff <= 0) {
+        countdownEl.textContent = 'Hôm nay là sinh nhật của Gia Phát 🎉';
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      countdownEl.textContent = `Còn ${days} ngày ${hours} giờ ${minutes} phút ${seconds} giây nữa đến sinh nhật`;
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    let confettiPieces = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function createConfettiPiece() {
+      const colors = ['#ff4f81', '#ffbf69', '#6ddccf', '#7b9cff', '#b8f2a1', '#ffd6e0'];
+      return {
+        x: random(0, canvas.width),
+        y: random(-canvas.height, 0),
+        w: random(6, 12),
+        h: random(10, 18),
+        color: colors[Math.floor(Math.random() * colors.length)],
+        speed: random(2, 5),
+        drift: random(-1.5, 1.5),
+        rotation: random(0, Math.PI * 2),
+        rotationSpeed: random(0.02, 0.08)
+      };
+    }
+
+    function initConfetti(count = 180) {
+      confettiPieces = [];
+      for (let i = 0; i < count; i++) {
+        confettiPieces.push(createConfettiPiece());
+      }
+    }
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      confettiPieces.forEach((p, index) => {
+        p.y += p.speed;
+        p.x += p.drift;
+        p.rotation += p.rotationSpeed;
+
+        if (p.y > canvas.height + 20) {
+          confettiPieces[index] = createConfettiPiece();
+          confettiPieces[index].y = -20;
+        }
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rotation);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+      });
+
+      requestAnimationFrame(drawConfetti);
+    }
+
+    resizeCanvas();
+    initConfetti();
+    drawConfetti();
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      initConfetti();
+    });
+  </script>
+</body>
+</html>
